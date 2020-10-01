@@ -1,0 +1,4 @@
+com/example/GroovyTest/GroovyTestApplication.java
+ com.example.GroovyTest.GroovyTestApplication
+com/example/GroovyTest/controller/TestController.java
+ com.example.GroovyTest.controller.TestController

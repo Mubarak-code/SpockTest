@@ -1,36 +1,72 @@
-plugins {
-	id 'org.springframework.boot' version '2.3.4.RELEASE'
-	id 'io.spring.dependency-management' version '1.0.10.RELEASE'
-	id 'java'
-}
+buildscript {
+	ext {
+		springBootVersion = '2.3.4.RELEASE'
+		lombokVersion = '1.18.10'
+		spockVersion = '1.3-RC1-groovy-2.5'
+		cglibVersion = '3.2.0'
+		groovyVersion = '2.4.7'
+		gradleWrapperVersion = '6.3'
+		gradleDockerVerson = '1.2'
 
-group = 'com.example'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '1.8'
 
-configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath "se.transmode.gradle:gradle-docker:${gradleDockerVerson}"
+		classpath "org.springframework.plugin:spring-plugin-core:2.0.0.RELEASE"
 	}
 }
 
+apply plugin: 'java'
+apply plugin: 'groovy'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+apply plugin: "io.spring.dependency-management"
+
+
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
 repositories {
+
 	mavenCentral()
 }
 
+
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-groovy-templates'
+
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	compileOnly 'org.projectlombok:lombok'
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+
+	//mySQL
 	runtimeOnly 'mysql:mysql-connector-java'
-	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation('org.springframework.boot:spring-boot-starter-test') {
-		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-	}
+
+	//dev tools
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+	// lombok for code generation
+	compileOnly "org.projectlombok:lombok:${lombokVersion}"
+	annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+
+
+	// testing framework
+	testImplementation "org.springframework.boot:spring-boot-starter-test"
+	testImplementation "org.spockframework:spock-core:${spockVersion}"
+	testImplementation "org.spockframework:spock-spring:${spockVersion}"
+	testImplementation "cglib:cglib-nodep:${cglibVersion}" //needed for spock mocking/stubbing
+
+
 }
 
-test {
-	useJUnitPlatform()
+
+eclipse {
+	jdt {
+		javaRuntimeName = "JavaSE-1.8"
+	}
 }

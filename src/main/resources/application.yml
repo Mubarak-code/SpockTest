@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: GroovyTestApplication
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+      naming:
+        implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+
+  datasource:
+    username: root
+    password: root@mysql
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/healthcareDB?serverTimezone=UTC
+
+  jooq:
+    sql-dialect: org.hibernate.dialect.MySQL5Dialect
+
+
+
+server:
+  port: 8080
+
+
+
